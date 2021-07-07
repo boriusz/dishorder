@@ -6,21 +6,25 @@ const handleSubmit = (values: Record<string, string | number>): void => {
   const reqData: Record<string, string | number> = {}
 
   reqData.name = values.name
-  reqData.preparation_time = values.preparation_time
+
+  if ((values.preparation_time as string).length === 5) {
+    reqData.preparation_time = values.preparation_time + ':00'
+  } else {
+    reqData.preparation_time = values.preparation_time
+  }
   reqData.type = values.type
 
   // Extract needed values, we could also delete unnecessary data on type field change
   if (values.type === 'pizza') {
-    reqData.no_of_slices = values.no_of_slices
-    reqData.diameter = values.diameter
+    reqData.no_of_slices = Number(values.no_of_slices)
+    reqData.diameter = Number(values.diameter)
   }
   if (values.type === 'soup') {
-    reqData.spiciness = values.spiciness
+    reqData.spiciness = Number(values.spiciness)
   }
   if (values.type === 'sandwich') {
-    reqData.slices_of_bread = values.no_of_slices
+    reqData.slices_of_bread = Number(values.slices_of_bread)
   }
-  console.log(reqData)
 }
 
 const App: React.FC = () => {

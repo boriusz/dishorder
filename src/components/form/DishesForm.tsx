@@ -3,7 +3,7 @@ import { Field, reduxForm, SubmitHandler } from 'redux-form'
 import { Box, Button, MenuItem } from '@material-ui/core'
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form/lib/Field'
 import { ConditionalFormFields } from 'components/form/ConditionalFormFields'
-import { required } from 'utils/validation'
+import { preparationValid, required } from 'utils/validation'
 import {
   renderDurationInput,
   renderSelectField,
@@ -41,7 +41,7 @@ const DishesForm: React.FC<DishesFormProps> = ({ handleSubmit, pristine, submitt
           name={'preparation_time'}
           component={renderDurationInput}
           label={'Preparation time'}
-          validate={required}
+          validate={preparationValid}
         />
         <br />
         <Field

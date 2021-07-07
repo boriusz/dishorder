@@ -1,3 +1,5 @@
+import { FORM_PREP_TIME_LENGTH, FORM_SCALE_MAX, FORM_SCALE_MIN } from './constants'
+
 export const required = (value: string | undefined): string | undefined => {
   if (!value || value === '') {
     return 'This field is required'
@@ -6,11 +8,44 @@ export const required = (value: string | undefined): string | undefined => {
 }
 
 export const integer = (value: string | undefined): string | undefined => {
-  if (value) {
-    const isInteger = !isNaN(Number(value))
-    if (!isInteger) {
-      return 'This should be an integer'
+  if (!value || value === '') {
+    return 'This field is required'
+  }
+  const asNumber = Number(value)
+  const isNumber = !isNaN(asNumber)
+  if (isNumber) {
+    const isFloat = /\./gi.test(asNumber.toString())
+    if (isFloat) {
+      return 'Incorrect number, expected int'
     }
   }
-  return 'This field is required'
+}
+
+export const floatOrInt = (value: string | undefined): string | undefined => {
+  if (!value || value === '') {
+    return 'This field is required'
+  }
+  const asNumber = Number(value)
+  const isNumber = !isNaN(asNumber)
+  if (!isNumber) {
+    return 'This should be a number'
+  }
+}
+
+export const betweenScaleValues = (value: string | undefined): string | undefined => {
+  if (!value || value === '') {
+    return 'This field is required'
+  }
+  const asNumber = Number(value)
+  if (!isNaN(asNumber)) {
+    if (asNumber < FORM_SCALE_MIN || asNumber > FORM_SCALE_MAX) {
+      return 'Value out of bounds'
+    }
+  }
+}
+
+export const preparationValid = (value: string | undefined): string | undefined => {
+  if (value?.length !== FORM_PREP_TIME_LENGTH && value?.length !== FORM_PREP_TIME_LENGTH - 3) {
+    return 'Incorrect data'
+  }
 }

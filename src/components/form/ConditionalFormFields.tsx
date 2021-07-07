@@ -1,7 +1,8 @@
 import React from 'react'
 import { Field } from 'redux-form'
-import { required } from 'utils/validation'
+import { betweenScaleValues, floatOrInt, integer } from 'utils/validation'
 import { renderNumberInput } from './formFieldsCreators'
+import { FORM_SCALE_MAX, FORM_SCALE_MIN } from '../../utils/constants'
 
 interface ConditionalFormFieldsProps {
   selectedDishType: 'pizza' | 'soup' | 'sandwich'
@@ -17,7 +18,7 @@ export const ConditionalFormFields: React.FC<ConditionalFormFieldsProps> = ({
           name={'no_of_slices'}
           label={'Number of slices'}
           component={renderNumberInput}
-          validate={required}
+          validate={integer}
         />
         <br />
         <Field
@@ -25,7 +26,7 @@ export const ConditionalFormFields: React.FC<ConditionalFormFieldsProps> = ({
           label={'Diameter'}
           inputProps={{ step: 0.1 }}
           component={renderNumberInput}
-          validate={required}
+          validate={floatOrInt}
         />
         <br />
       </>
@@ -36,10 +37,10 @@ export const ConditionalFormFields: React.FC<ConditionalFormFieldsProps> = ({
       <>
         <Field
           name={'spiciness_scale'}
-          label={'Scale of spiciness (1-10)'}
-          inputProps={{ min: 1, max: 10 }}
+          label={`Scale of spiciness (${FORM_SCALE_MIN}-${FORM_SCALE_MAX})`}
+          inputProps={{ min: FORM_SCALE_MIN, max: FORM_SCALE_MAX }}
           component={renderNumberInput}
-          validate={required}
+          validate={betweenScaleValues}
         />
         <br />
       </>
@@ -52,7 +53,7 @@ export const ConditionalFormFields: React.FC<ConditionalFormFieldsProps> = ({
           name={'slices_of_bread'}
           label={'Slices of bread'}
           component={renderNumberInput}
-          validate={required}
+          validate={integer}
         />
         <br />
       </>

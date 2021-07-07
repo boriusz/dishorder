@@ -36,7 +36,7 @@ export const renderSelectField: React.FC<FieldProps> = ({
   children,
   ...custom
 }) => (
-  <FormControl error={touched && error}>
+  <FormControl error={touched && !!error}>
     <InputLabel htmlFor="type-input">{label}</InputLabel>
     <Select
       {...input}
