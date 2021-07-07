@@ -36,7 +36,7 @@ export const ConditionalFormFields: React.FC<ConditionalFormFieldsProps> = ({
     return (
       <>
         <Field
-          name={'spiciness_scale'}
+          name={'spiciness'}
           label={`Scale of spiciness (${FORM_SCALE_MIN}-${FORM_SCALE_MAX})`}
           inputProps={{ min: FORM_SCALE_MIN, max: FORM_SCALE_MAX }}
           component={renderNumberInput}

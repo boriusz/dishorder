@@ -19,6 +19,7 @@ export const renderDurationInput: React.FC<FieldProps> = ({
     }}
     inputProps={{
       step: 1,
+      min: '00:00:01',
     }}
   />
 )

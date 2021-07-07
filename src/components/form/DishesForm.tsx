@@ -27,7 +27,7 @@ const DishesForm: React.FC<DishesFormProps> = ({ handleSubmit, pristine, submitt
     null
   )
   return (
-    <Box width={'100%'} maxWidth={800} boxShadow={5} p={2} m={2}>
+    <Box width={'100%'} maxWidth={800} boxShadow={5} p={2} m={2} borderRadius={12}>
       <form
         onSubmit={handleSubmit}
         style={{
