@@ -17,4 +17,13 @@ To run this app locally follow these 3 steps:
 
 ## Live example
 
-Live example is available on [https://localhost:3000](https://localhost:3000)
+Live example is available on [https://keen-ptolemy-1a708e.netlify.app](https://keen-ptolemy-1a708e.netlify.app)
+
+### Node and npm/yarn versions
+
+- Node- 15.9.0
+- npm- 7.5.3
+- yarn- 1.22.10
+
+### Time spent
+Around 4.5 hours without environment setup
