@@ -26,7 +26,7 @@ export interface FieldProps {
 const DishesForm: React.FC<DishesFormProps> = ({ handleSubmit, pristine, submitting }) => {
   const selectedDishType = useAppSelector((state) => state?.form?.dishes?.values?.type ?? null)
   return (
-    <Box width={'100%'} maxWidth={800} boxShadow={5} p={2} m={2} borderRadius={12}>
+    <Box width={'100%'} maxWidth={600} boxShadow={5} p={2} m={2} borderRadius={12}>
       <form
         onSubmit={handleSubmit}
         style={{
@@ -43,21 +43,7 @@ const DishesForm: React.FC<DishesFormProps> = ({ handleSubmit, pristine, submitt
           validate={preparationValid}
         />
         <br />
-        <Field
-          name={'type'}
-          component={renderSelectField}
-          label={'Dish type'}
-          // onChange={(
-          //   data:
-          //     | React.ChangeEvent<never>
-          //     | React.ChangeEvent<HTMLInputElement>
-          //     | React.ChangeEvent<HTMLSelectElement>
-          //     | React.ChangeEvent<HTMLTextAreaElement>
-          // ) => {
-          //   setSelectedDishType(data.target.value as 'pizza' | 'soup' | 'sandwich')
-          // }}
-          validate={required}
-        >
+        <Field name={'type'} component={renderSelectField} label={'Dish type'} validate={required}>
           <MenuItem value={'pizza'}>Pizza</MenuItem>
           <MenuItem value={'soup'}>Soup</MenuItem>
           <MenuItem value={'sandwich'}>Sandwich</MenuItem>

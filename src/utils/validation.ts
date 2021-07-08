@@ -21,7 +21,7 @@ export const integer = (value: string | undefined): string | undefined => {
   }
 }
 
-export const floatOrInt = (value: string | undefined): string | undefined => {
+export const number = (value: string | undefined): string | undefined => {
   if (!value || value === '') {
     return 'This field is required'
   }

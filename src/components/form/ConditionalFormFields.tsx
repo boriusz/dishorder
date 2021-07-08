@@ -1,6 +1,6 @@
 import React from 'react'
 import { Field } from 'redux-form'
-import { betweenScaleValues, floatOrInt, integer } from 'utils/validation'
+import { betweenScaleValues, number, integer } from 'utils/validation'
 import { renderNumberInput } from './formFieldsCreators'
 import { FORM_SCALE_MAX, FORM_SCALE_MIN } from '../../utils/constants'
 
@@ -27,7 +27,7 @@ export const ConditionalFormFields: React.FC<ConditionalFormFieldsProps> = ({
           label={'Diameter'}
           inputProps={{ step: 0.01 }}
           component={renderNumberInput}
-          validate={floatOrInt}
+          validate={number}
         />
         <br />
       </>

@@ -1,3 +1,5 @@
+import { API_URL } from './constants'
+
 export const handleSubmit = async (
   values: Record<string, string | number>
 ): Promise<Record<string, string | number>> => {
@@ -25,13 +27,12 @@ export const handleSubmit = async (
     reqData.slices_of_bread = Number(values.slices_of_bread)
   }
 
-  const res = await fetch('https://frosty-wood-6558.getsandbox.com:443/dishes', {
+  const res = await fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(reqData),
   })
   const responseAsJSON = await res.json()
-  console.log(responseAsJSON)
   if (res.status >= 400 && res.status < 600) {
     throw responseAsJSON
   } else {
