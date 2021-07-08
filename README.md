@@ -17,7 +17,7 @@ To run this app locally follow these 3 steps:
 
 ## Live example
 
-Live example is available on [https://keen-ptolemy-1a708e.netlify.app](https://keen-ptolemy-1a708e.netlify.app)
+Live example is available on [https://dishes-example.netlify.app](https://dishes-example.netlify.app)
 
 ### Node and npm/yarn versions
 
