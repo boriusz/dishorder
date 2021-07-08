@@ -67,7 +67,7 @@ export const renderTextField: React.FC<FieldProps> = ({
   />
 )
 export const renderNumberInput: React.FC<
-  FieldProps & { inputProps?: { min: number; max: number } | { step: number } }
+  FieldProps & { inputProps?: Record<string, string | number> }
 > = ({ input, label, meta: { error, touched, invalid }, inputProps }) => (
   <TextField
     label={label}

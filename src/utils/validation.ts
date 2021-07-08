@@ -14,9 +14,9 @@ export const integer = (value: string | undefined): string | undefined => {
   const asNumber = Number(value)
   const isNumber = !isNaN(asNumber)
   if (isNumber) {
-    const isFloat = /\./gi.test(asNumber.toString())
-    if (isFloat) {
-      return 'Incorrect number, expected int'
+    const isInteger = Number.isInteger(asNumber)
+    if (!isInteger) {
+      return 'Incorrect number, expected integer'
     }
   }
 }

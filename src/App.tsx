@@ -1,44 +1,18 @@
 import React, { useState } from 'react'
 import DishesForm from 'components/form/DishesForm'
-import { SubmissionError } from 'redux-form'
-import { Box, Button, CircularProgress } from '@material-ui/core'
+import { Box, Snackbar } from '@material-ui/core'
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert'
+import { handleSubmit } from './utils/formSubmission'
+import { reset, SubmissionError } from 'redux-form'
+import { AppDispatch } from './app/store'
 
-const handleSubmit = (
-  values: Record<string, string | number>
-): { errors: Record<string, string> | null } => {
-  const reqData: Record<string, string | number> = {}
-
-  reqData.name = values.name
-
-  if ((values.preparation_time as string).length === 5) {
-    reqData.preparation_time = values.preparation_time + ':00'
-  } else {
-    reqData.preparation_time = values.preparation_time
-  }
-  reqData.type = values.type
-
-  // Extract needed values, we could also delete unnecessary data on type field change
-  if (values.type === 'pizza') {
-    reqData.no_of_slices = Number(values.no_of_slices)
-    reqData.diameter = Number(values.diameter)
-  }
-  if (values.type === 'soup') {
-    reqData.spiciness = Number(values.spiciness)
-  }
-  if (values.type === 'sandwich') {
-    reqData.slices_of_bread = Number(values.slices_of_bread)
-  }
-  // return { errors: null }
-  //Example error possibly returned from API
-  return {
-    errors: {
-      preparation_time: 'Too long',
-    },
-  }
+const Alert: React.FC<AlertProps> = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
 const App: React.FC = () => {
-  const [sendingState, setSendingState] = useState<'idle' | 'pending' | 'completed'>('idle')
+  const [completed, setCompleted] = useState(false)
+  const [result, setResult] = useState<Record<string, string | number> | null>(null)
   return (
     <Box
       width={'100%'}
@@ -47,50 +21,24 @@ const App: React.FC = () => {
       justifyContent={'center'}
       alignItems={'center'}
     >
-      {sendingState === 'idle' && (
-        <DishesForm
-          onSubmit={(values: Record<string, string | number>) => {
-            setSendingState('pending')
-            const { errors } = handleSubmit(values)
-            //Setting all errors to fields
-            if (errors) {
-              setSendingState('idle')
-              throw new SubmissionError({ ...errors })
-            }
-            setTimeout(() => {
-              setSendingState('completed')
-            }, 1000)
-          }}
-        />
-      )}
-      {sendingState === 'pending' && <CircularProgress />}
-      {sendingState === 'completed' && (
-        <Box
-          boxShadow={5}
-          p={2}
-          m={2}
-          borderRadius={12}
-          maxWidth={800}
-          width={'60%'}
-          display={'flex'}
-          flexDirection={'column'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          fontSize={24}
-        >
-          Dish ordered successfully.
-          <Box mt={4}>
-            <Button
-              variant={'outlined'}
-              onClick={() => {
-                setSendingState('idle')
-              }}
-            >
-              Another order
-            </Button>
-          </Box>
-        </Box>
-      )}
+      <DishesForm
+        onSubmit={async (values: Record<string, string | number>, dispatch: AppDispatch) => {
+          try {
+            const data = await handleSubmit(values)
+            setResult(data)
+            setCompleted(true)
+            dispatch(reset('dishes'))
+            return data
+          } catch (e) {
+            throw new SubmissionError(e)
+          }
+        }}
+      />
+      <Snackbar open={completed} autoHideDuration={6000} onClose={() => setCompleted(false)}>
+        <Alert onClose={() => setCompleted(false)} severity="success">
+          Ordered successfully. Order id: {result?.id}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }

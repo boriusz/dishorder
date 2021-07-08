@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Field, reduxForm, SubmitHandler } from 'redux-form'
 import { Box, Button, MenuItem } from '@material-ui/core'
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form/lib/Field'
@@ -9,6 +9,7 @@ import {
   renderSelectField,
   renderTextField,
 } from 'components/form/formFieldsCreators'
+import { useAppSelector } from '../../app/hooks'
 
 interface DishesFormProps {
   handleSubmit: SubmitHandler<Record<string, unknown>, Record<string, unknown>>
@@ -23,9 +24,7 @@ export interface FieldProps {
 }
 
 const DishesForm: React.FC<DishesFormProps> = ({ handleSubmit, pristine, submitting }) => {
-  const [selectedDishType, setSelectedDishType] = useState<'pizza' | 'soup' | 'sandwich' | null>(
-    null
-  )
+  const selectedDishType = useAppSelector((state) => state?.form?.dishes?.values?.type ?? null)
   return (
     <Box width={'100%'} maxWidth={800} boxShadow={5} p={2} m={2} borderRadius={12}>
       <form
@@ -48,15 +47,15 @@ const DishesForm: React.FC<DishesFormProps> = ({ handleSubmit, pristine, submitt
           name={'type'}
           component={renderSelectField}
           label={'Dish type'}
-          onChange={(
-            data:
-              | React.ChangeEvent<never>
-              | React.ChangeEvent<HTMLInputElement>
-              | React.ChangeEvent<HTMLSelectElement>
-              | React.ChangeEvent<HTMLTextAreaElement>
-          ) => {
-            setSelectedDishType(data.target.value as 'pizza' | 'soup' | 'sandwich')
-          }}
+          // onChange={(
+          //   data:
+          //     | React.ChangeEvent<never>
+          //     | React.ChangeEvent<HTMLInputElement>
+          //     | React.ChangeEvent<HTMLSelectElement>
+          //     | React.ChangeEvent<HTMLTextAreaElement>
+          // ) => {
+          //   setSelectedDishType(data.target.value as 'pizza' | 'soup' | 'sandwich')
+          // }}
           validate={required}
         >
           <MenuItem value={'pizza'}>Pizza</MenuItem>
@@ -73,4 +72,6 @@ const DishesForm: React.FC<DishesFormProps> = ({ handleSubmit, pristine, submitt
   )
 }
 
-export default reduxForm({ form: 'dishes' })(DishesForm)
+export default reduxForm({
+  form: 'dishes',
+})(DishesForm)

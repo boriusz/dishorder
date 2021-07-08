@@ -18,13 +18,14 @@ export const ConditionalFormFields: React.FC<ConditionalFormFieldsProps> = ({
           name={'no_of_slices'}
           label={'Number of slices'}
           component={renderNumberInput}
+          inputProps={{ step: 1 }}
           validate={integer}
         />
         <br />
         <Field
           name={'diameter'}
           label={'Diameter'}
-          inputProps={{ step: 0.1 }}
+          inputProps={{ step: 0.01 }}
           component={renderNumberInput}
           validate={floatOrInt}
         />
@@ -36,7 +37,7 @@ export const ConditionalFormFields: React.FC<ConditionalFormFieldsProps> = ({
     return (
       <>
         <Field
-          name={'spiciness'}
+          name={'spiciness_scale'}
           label={`Scale of spiciness (${FORM_SCALE_MIN}-${FORM_SCALE_MAX})`}
           inputProps={{ min: FORM_SCALE_MIN, max: FORM_SCALE_MAX }}
           component={renderNumberInput}
